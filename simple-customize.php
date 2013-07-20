@@ -108,7 +108,8 @@ class simple_customize
      * Ajax storing of newly selected objects to style
      */
     function customize_ajax_add() {
-        $options = get_option( 'simple_customize', array() );
+        $theme = wp_get_theme();
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
         /**
          * Check our default value for RGB value and convert to hex if found
@@ -118,8 +119,8 @@ class simple_customize
 
         $options[] = $_POST;
 
-        if ( ! add_option( 'simple_customize', $options, '', 'no' ) )
-            update_option( 'simple_customize', $options );
+        if ( ! add_option( 'simple_customize_' . $theme->stylesheet, $options, '', 'no' ) )
+            update_option( 'simple_customize_' . $theme->stylesheet, $options );
 
         exit();
     }
@@ -367,7 +368,9 @@ class simple_customize
      */
     function generate_css()
     {
-        $options = get_option( 'simple_customize', array() );
+        $theme = wp_get_theme();
+
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
         foreach( $options AS $option )
         {
@@ -570,7 +573,9 @@ class simple_customize
      * Upon page load, get our defined options and add settings for them
      */
     function getSettings() {
-        $categories = get_option( 'simple_customize_category', array() );
+        $theme = wp_get_theme();
+
+        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
         foreach( $categories AS $category )
         {
@@ -583,7 +588,7 @@ class simple_customize
             );
         }
 
-        $options = get_option( 'simple_customize', array() );
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
         foreach( $options AS $option )
         {

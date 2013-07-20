@@ -22,7 +22,7 @@
 
         <tbody id="the-list">
         <?php
-        $options = get_option( 'simple_customize', array() );
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
         foreach( $options AS $option )
         {
@@ -72,7 +72,7 @@
                     </optgroup>
                     <optgroup label="<?php _e( 'Your categories', 'simple-customize-plugin' ); ?>">
                         <?php
-                        $categories = get_option( 'simple_customize_category', array() );
+                        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
                         foreach( $categories AS $category )
                         {
@@ -123,7 +123,7 @@
 
         <tbody id="the-list">
         <?php
-        $categories = get_option( 'simple_customize_category', array() );
+        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
         foreach( $categories AS $category )
         {

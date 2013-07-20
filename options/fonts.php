@@ -31,7 +31,7 @@
 
         <tbody id="the-list">
         <?php
-        $fonts = get_option( 'simple_customize_fonts', array() );
+        $fonts = get_option( 'simple_customize_fonts_' . $theme->stylesheet, array() );
 
         foreach( $fonts AS $font )
         {

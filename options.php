@@ -1,8 +1,10 @@
 <?php
+    $theme = wp_get_theme();
+
     // Code relating to customize settings
     if ( isset( $_GET['delete'] ) && ! empty( $_GET['delete'] ) )
     {
-        $options = get_option( 'simple_customize', array() );
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
         $options_update = array();
 
         foreach( $options AS $option )
@@ -11,11 +13,11 @@
                 $options_update[] = $option;
         }
 
-        update_option( 'simple_customize', $options_update );
+        update_option( 'simple_customize_' . $theme->stylesheet, $options_update );
     }
     if ( isset( $_GET['category-delete'] ) && ! empty( $_GET['category-delete'] ) )
     {
-        $options = get_option( 'simple_customize_category', array() );
+        $options = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
         $options_update = array();
 
         foreach( $options AS $option )
@@ -24,25 +26,25 @@
                 $options_update[] = $option;
         }
 
-        update_option( 'simple_customize_category', $options_update );
+        update_option( 'simple_customize_category_' . $theme->stylesheet, $options_update );
     }
 
     if ( isset( $_POST['category-label'] ) && ! empty( $_POST['category-label'] ) )
     {
-        $categories = get_option( 'simple_customize_category', array() );
+        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
         /**
          * Check our default value for RGB value and convert to hex if found
          */
         $categories[] = $_POST;
 
-        if ( ! add_option( 'simple_customize_category', $categories, '', 'no' ) )
-            update_option( 'simple_customize_category', $categories );
+        if ( ! add_option( 'simple_customize_category_' . $theme->stylesheet, $categories, '', 'no' ) )
+            update_option( 'simple_customize_category_' . $theme->stylesheet, $categories );
     }
 
     if ( isset( $_POST['label'] ) && ! empty( $_POST['label'] ) )
     {
-        $options = get_option( 'simple_customize', array() );
+        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
         /**
          * Check our default value for RGB value and convert to hex if found
@@ -52,23 +54,23 @@
 
         $options[] = $_POST;
 
-        if ( ! add_option( 'simple_customize', $options, '', 'no' ) )
-            update_option( 'simple_customize', $options );
+        if ( ! add_option( 'simple_customize_' . $theme->stylesheet, $options, '', 'no' ) )
+            update_option( 'simple_customize_' . $theme->stylesheet, $options );
     }
 
     //  Code relating to Fonts
     if ( isset( $_POST['font-label'] ) && ! empty( $_POST['font-label'] ) )
     {
-        $fonts = get_option( 'simple_customize_fonts', array() );
+        $fonts = get_option( 'simple_customize_fonts_' . $theme->stylesheet, array() );
 
         $fonts[] = $_POST;
 
-        if ( ! add_option( 'simple_customize_fonts', $fonts, '', 'no' ) )
-            update_option( 'simple_customize_fonts', $fonts );
+        if ( ! add_option( 'simple_customize_fonts_' . $theme->stylesheet, $fonts, '', 'no' ) )
+            update_option( 'simple_customize_fonts_' . $theme->stylesheet, $fonts );
     }
     if ( isset( $_GET['font-delete'] ) && ! empty( $_GET['font-delete'] ) )
     {
-        $options = get_option( 'simple_customize_fonts', array() );
+        $options = get_option( 'simple_customize_fonts_' . $theme->stylesheet, array() );
         $options_update = array();
 
         foreach( $options AS $option )
@@ -77,7 +79,7 @@
                 $options_update[] = $option;
         }
 
-        update_option( 'simple_customize_fonts', $options_update );
+        update_option( 'simple_customize_fonts_' . $theme->stylesheet, $options_update );
     }
 ?>
 <div class="wrap">
