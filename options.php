@@ -48,7 +48,7 @@
          * Check our default value for RGB value and convert to hex if found
          */
         if ( substr( $_POST['default'], 0, 3 ) == 'rgb' )
-            $_POST['default'] = $this->rgb2hex( explode( str_replace( array( 'rgba(', 'rgb(', ')' ), array( '', '', '' ), $_POST['default'] ) ) );
+            $_POST['default'] = $this->rgb2hex( explode( ",", str_replace( array( 'rgba(', 'rgb(', ')' ), array( '', '', '' ), $_POST['default'] ) ) );
 
         $options[] = $_POST;
 
