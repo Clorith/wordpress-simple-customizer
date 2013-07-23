@@ -31,25 +31,26 @@
 
         <tbody id="the-list">
         <?php
-        $fonts = get_option( 'simple_customize_fonts_' . $theme->stylesheet, array() );
-
-        foreach( $fonts AS $font )
+        if ( isset( $fonts[$theme->stylesheet] ) )
         {
-            ?>
-            <tr>
-                <td>
-                    <?php echo $font['font-label']; ?>
-                    <div class="row-actions">
-                            <span class="delete">
-                                <a href="?page=simple-customize&amp;tab=fonts&amp;font-delete=<?php echo sanitize_title( $font['font-label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
-                            </span>
-                    </div>
-                </td>
-                <td>
-                    <?php echo $font['font-location']; ?>
-                </td>
-            </tr>
-        <?php
+            foreach( $fonts[$theme->stylesheet] AS $font )
+            {
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $font['font-label']; ?>
+                        <div class="row-actions">
+                                <span class="delete">
+                                    <a href="?page=simple-customize&amp;tab=fonts&amp;font-delete=<?php echo sanitize_title( $font['font-label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
+                                </span>
+                        </div>
+                    </td>
+                    <td>
+                        <?php echo $font['font-location']; ?>
+                    </td>
+                </tr>
+            <?php
+            }
         }
         ?>
 

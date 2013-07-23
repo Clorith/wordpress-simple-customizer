@@ -22,34 +22,36 @@
 
         <tbody id="the-list">
         <?php
-        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
-        foreach( $options AS $option )
+        if ( isset( $options[$theme->stylesheet] ) )
         {
-            ?>
-            <tr>
-                <td>
-                    <?php echo $option['label']; ?>
-                    <div class="row-actions">
-                            <span class="delete">
-                                <a href="?page=simple-customize&delete=<?php echo sanitize_title( $option['label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
-                            </span>
-                    </div>
-                </td>
-                <td>
-                    <?php echo $option['category']; ?>
-                </td>
-                <td>
-                    <?php echo $option['object']; ?>
-                </td>
-                <td>
-                    <?php echo ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ); ?>
-                </td>
-                <td>
-                    <?php echo $option['default']; ?>
-                </td>
-            </tr>
-        <?php
+            foreach( $options[$theme->stylesheet] AS $option )
+            {
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $option['label']; ?>
+                        <div class="row-actions">
+                                <span class="delete">
+                                    <a href="?page=simple-customize&delete=<?php echo sanitize_title( $option['label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
+                                </span>
+                        </div>
+                    </td>
+                    <td>
+                        <?php echo $option['category']; ?>
+                    </td>
+                    <td>
+                        <?php echo $option['object']; ?>
+                    </td>
+                    <td>
+                        <?php echo ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ); ?>
+                    </td>
+                    <td>
+                        <?php echo $option['default']; ?>
+                    </td>
+                </tr>
+            <?php
+            }
         }
         ?>
 
@@ -72,11 +74,13 @@
                     </optgroup>
                     <optgroup label="<?php _e( 'Your categories', 'simple-customize-plugin' ); ?>">
                         <?php
-                        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
-                        foreach( $categories AS $category )
+                        if ( isset( $categories[$theme->stylesheer] ) )
                         {
-                            echo '<option value="' . sanitize_title( $category['category-label'] ) . '">' . $category['category-label'] . '</option>';
+                            foreach( $categories[$theme->stylesheet] AS $category )
+                            {
+                                echo '<option value="' . sanitize_title( $category['category-label'] ) . '">' . $category['category-label'] . '</option>';
+                            }
                         }
                         ?>
                     </optgroup>
@@ -101,7 +105,7 @@
 </h2>
 
 <span>
-        <?php _e( 'A category is usually used to group together customization options of similar origin. One such example would be to create a category titled "Footer" and put all your customized optios for the footer inside this category.', 'simple-customize-plugin' ); ?>
+        <?php _e( 'A category is usually used to group together customization options of similar origin. One such example would be to create a category titled "Footer" and put all your customized options for the footer inside this category.', 'simple-customize-plugin' ); ?>
     </span>
 
 <br />
@@ -123,22 +127,24 @@
 
         <tbody id="the-list">
         <?php
-        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
 
-        foreach( $categories AS $category )
+        if ( isset( $categories[$theme->stylesheet] ) )
         {
-            ?>
-            <tr>
-                <td colspan="2">
-                    <?php echo $category['category-label']; ?>
-                    <div class="row-actions">
-                            <span class="delete">
-                                <a href="?page=simple-customize&category-delete=<?php echo sanitize_title( $category['category-label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
-                            </span>
-                    </div>
-                </td>
-            </tr>
-        <?php
+            foreach( $categories[$theme->stylesheet] AS $category )
+            {
+                ?>
+                <tr>
+                    <td colspan="2">
+                        <?php echo $category['category-label']; ?>
+                        <div class="row-actions">
+                                <span class="delete">
+                                    <a href="?page=simple-customize&category-delete=<?php echo sanitize_title( $category['category-label'] ); ?>" class="delete"><?php _e( 'Delete', 'simple-customize-plugin' ); ?></a>
+                                </span>
+                        </div>
+                    </td>
+                </tr>
+            <?php
+            }
         }
         ?>
 

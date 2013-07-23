@@ -109,7 +109,7 @@ class simple_customize
      */
     function customize_ajax_add() {
         $theme = wp_get_theme();
-        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
+        $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
 
         /**
          * Check our default value for RGB value and convert to hex if found
@@ -117,10 +117,10 @@ class simple_customize
         if ( substr( $_POST['default'], 0, 3 ) == 'rgb' )
             $_POST['default'] = $this->rgb2hex( explode( ",", str_replace( array( 'rgba(', 'rgb(', ')' ), array( '', '', '' ), $_POST['default'] ) ) );
 
-        $options[] = $_POST;
+        $options[$theme->stylesheet][] = $_POST;
 
-        if ( ! add_option( 'simple_customize_' . $theme->stylesheet, $options, '', 'no' ) )
-            update_option( 'simple_customize_' . $theme->stylesheet, $options );
+        if ( ! add_option( 'simple_customize', $options, '', 'no' ) )
+            update_option( 'simple_customize', $options );
 
         exit();
     }
@@ -297,8 +297,8 @@ class simple_customize
         else
             wp_register_style( $theme->stylesheet . '-custom-css', home_url( '/' . $theme->stylesheet . '-custom-css.css' ), false, '1.0.0' );
 
-        $fonts = get_option( 'simple_customize_fonts', array() );
-        foreach ( $fonts AS $font )
+        $fonts = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+        foreach ( $fonts[$theme->stylesheet] AS $font )
         {
             wp_enqueue_style( 'font-' . sanitize_title( $font['font-label'] ), $font['font-location'] );
         }
@@ -370,11 +370,14 @@ class simple_customize
     {
         $theme = wp_get_theme();
 
-        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
+        $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
 
-        foreach( $options AS $option )
+        if ( isset( $options[$theme->stylesheet] ) )
         {
-            echo $option['object'] . " { " . ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) . ": " . get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ) . "; }\n";
+            foreach( $options[$theme->stylesheet] AS $option )
+            {
+                echo $option['object'] . " { " . ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) . ": " . get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ) . "; }\n";
+            }
         }
     }
 
@@ -406,6 +409,7 @@ class simple_customize
      */
     function generate_core_js()
     {
+        $theme = wp_get_theme();
         ?>
 
         var appendHTML = ' \
@@ -433,9 +437,9 @@ class simple_customize
                                     </optgroup>\
                                     <optgroup label="<?php _e( 'Your categories', 'simple-customize-plugin' ); ?>">\
                                         <?php
-                                            $categories = get_option( 'simple_customize_category', array() );
+                                            $categories = get_option( 'simple_customize_category', array( $theme->stylesheet => array() ) );
 
-                                            foreach( $categories AS $category )
+                                            foreach( $categories[$theme->stylesheet] AS $category )
                                             {
                                                 echo '<option value="' . sanitize_title( $category['category-label'] ) . '">' . $category['category-label'] . '</option>\\';
                                             }
@@ -467,20 +471,18 @@ class simple_customize
                                 <input type="text" value="" id="simple_customize_default">\
                             </div>\
                         </label>\
-                        <label>\
-                            <span class="customize-control-title">&nbsp;</span>\
-                            <div class="customize-control-content">\
-                                <div class="simple-select-info updated" style="display: none;"><strong><?php _e( 'Select your element', 'simple-customize-plugin' ); ?></strong><br /><?php _e( 'You have started the customize process, please click the element you wish to customize in the preview window.', 'simple-customize-plugin' ); ?></div>\
-                                <div class="simple-select-button">\
-                                    <button type="button" class="button" id="simple_customize_selector" style="width:49%; text-align: center; background: transparent url( \'<?php echo plugins_url( 'resources/images/search.png', __FILE__ ); ?>\' ) 5px center no-repeat;"><?php _e( 'Find element', 'simple-customize-plugin' ); ?></button>\
-                                    <button class="button button-primary" id="simple_customize_store" style="width:49%; text-align: center;"><?php _e( 'Add element', 'simple-customize-plugin' ); ?></button>\
-                                    <br /><br />\
-                                    <a href="<?php echo admin_url( 'themes.php?page=simple-customize' ); ?>" class="button button-primary" style="width: 100%;text-align:center;"><?php _e( 'Plugin options', 'simple-customize-plugin' ); ?></a>\
-                                </div>\
+                        <span class="customize-control-title">&nbsp;</span>\
+                        <div class="customize-control-content">\
+                            <div class="simple-select-info updated" style="display: none;"><strong><?php _e( 'Select your element', 'simple-customize-plugin' ); ?></strong><br /><?php _e( 'You have started the customize process, please click the element you wish to customize in the preview window.', 'simple-customize-plugin' ); ?><br /><br /><span id="simple_customize_cancel" style="color: #bc0b0b; cursor: pointer;"><?php _e( 'Cancel search', 'simple-customize-plugin' ); ?></span></span></div>\
+                            <div class="simple-select-button">\
+                                <button type="button" class="button" id="simple_customize_selector" style="width:49%; text-align: center; background: transparent url( \'<?php echo plugins_url( 'resources/images/search.png', __FILE__ ); ?>\' ) 5px center no-repeat;"><?php _e( 'Find element', 'simple-customize-plugin' ); ?></button>\
+                                <button class="button button-primary" id="simple_customize_store" style="width:49%; text-align: center;"><?php _e( 'Add element', 'simple-customize-plugin' ); ?></button>\
                                 <br /><br />\
-                                <a href="<?php echo admin_url( 'themes.php?page=simple-customize&amp;tab=help' ); ?>" class="button" style="text-align: center; float: right; background: transparent url( \'<?php echo plugins_url( 'resources/images/help.png', __FILE__ ); ?>\' ) 5px center no-repeat; padding-left: 25px;"><?php _e( 'Help', 'simple-customize-plugin' ); ?></a>\
+                                <a href="<?php echo admin_url( 'themes.php?page=simple-customize' ); ?>" class="button button-primary" style="width: 100%;text-align:center;"><?php _e( 'Plugin options', 'simple-customize-plugin' ); ?></a>\
                             </div>\
-                        </label>\
+                            <br /><br />\
+                            <a href="<?php echo admin_url( 'themes.php?page=simple-customize&amp;tab=help' ); ?>" class="button" style="text-align: center; float: right; background: transparent url( \'<?php echo plugins_url( 'resources/images/help.png', __FILE__ ); ?>\' ) 5px center no-repeat; padding-left: 25px;"><?php _e( 'Help', 'simple-customize-plugin' ); ?></a>\
+                        </div>\
                     </li>\
                 </ul>\
             </li>\
@@ -542,6 +544,12 @@ class simple_customize
                 $(".simple-select-info").show();
             });
 
+            $("#simple_customize_cancel").on('click', function (e) {
+                simple_select = false;
+                $(".simple-select-info").hide();
+                $(".simple-select-button").show();
+            });
+
             $(".control-section").click(function (e) {
                 $(".control-section").removeClass('open');
                 $(this).addClass('open');
@@ -575,35 +583,54 @@ class simple_customize
     function getSettings() {
         $theme = wp_get_theme();
 
-        $categories = get_option( 'simple_customize_category_' . $theme->stylesheet, array() );
+        $categories = get_option( 'simple_customize_category', array( $theme->stylesheet => array() ) );
 
-        foreach( $categories AS $category )
+        if ( isset( $categories[$theme->stylesheet] ) )
         {
-            $this->add(
-                sanitize_title( $category['category-label'] ),
-                'section',
-                array(
-                    'title' => $category['category-label']
-                )
-            );
+            foreach( $categories[$theme->stylesheet] AS $category )
+            {
+                $this->add(
+                    sanitize_title( $category['category-label'] ),
+                    'section',
+                    array(
+                        'title' => $category['category-label']
+                    )
+                );
+            }
         }
 
-        $options = get_option( 'simple_customize_' . $theme->stylesheet, array() );
 
-        foreach( $options AS $option )
+        $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
+
+        if ( isset( $options[$theme->stylesheet] ) )
         {
-            $this->add(
-                sanitize_title( $option['label'] ),
-                'color',
-                array(
-                    'label'    => $option['label'],
-                    'object'   => $option['object'],
-                    'selector' => ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ),
-                    'default'  => $option['default'],
-                    'type'     => ( $this->confirmHex( $option['default'] ) ? 'color' : 'text' ) ,
-                    'section'  => $option['category']
-                )
-            );
+            foreach( $options[$theme->stylesheet] AS $option )
+            {
+                /**
+                 * Check that required fields that we cna't auto-populate are filled in, if not we ignore this element
+                 */
+                if ( empty( $option['label'] ) || empty( $option['object'] ) || ( empty( $option['selector'] ) && empty( $option['selector_manual'] ) ) )
+                    continue;
+
+                /**
+                 * Default the section if it isn't set
+                 */
+                if ( empty( $option['category'] ) )
+                    $option['category'] = 'colors';
+
+                $this->add(
+                    sanitize_title( $option['label'] ),
+                    'color',
+                    array(
+                        'label'    => $option['label'],
+                        'object'   => $option['object'],
+                        'selector' => ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ),
+                        'default'  => $option['default'],
+                        'type'     => ( $this->confirmHex( $option['default'] ) ? 'color' : 'text' ) ,
+                        'section'  => $option['category']
+                    )
+                );
+            }
         }
     }
 }
