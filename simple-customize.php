@@ -376,7 +376,14 @@ class simple_customize
         {
             foreach( $options[$theme->stylesheet] AS $option )
             {
-                echo $option['object'] . " { " . ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) . ": " . get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ) . "; }\n";
+                switch ( ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) )
+                {
+                    case 'background-image':
+                        echo $option['object'] . " { " . ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) . ": url( " . get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ) . " ); }\n";
+                        break;
+                    default:
+                        echo $option['object'] . " { " . ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) . ": " . get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ) . "; }\n";
+                }
             }
         }
     }
@@ -618,6 +625,16 @@ class simple_customize
                 if ( empty( $option['category'] ) )
                     $option['category'] = 'colors';
 
+                switch ( ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ) )
+                {
+                    case 'background-image':
+                        $type = 'image';
+                        break;
+                    default:
+                        $type = 'text';
+                }
+
+
                 $this->add(
                     sanitize_title( $option['label'] ),
                     'color',
@@ -626,7 +643,7 @@ class simple_customize
                         'object'   => $option['object'],
                         'selector' => ( ! empty( $option['selector_manual'] ) ? $option['selector_manual'] : $option['selector'] ),
                         'default'  => $option['default'],
-                        'type'     => ( $this->confirmHex( $option['default'] ) ? 'color' : 'text' ) ,
+                        'type'     => ( $this->confirmHex( $option['default'] ) ? 'color' : $type ) ,
                         'section'  => $option['category']
                     )
                 );
