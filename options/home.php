@@ -63,7 +63,7 @@
         <tr>
             <td><input type="text" style="width:100%;" name="label"></td>
             <td>
-                <select id="simple_customize_category" style="width:100%;">
+                <select id="simple_customize_category" name="category" style="width:100%;">
                     <optgroup label="<?php _e( 'WordPress defaults', 'simple-customize-plugin' ); ?>">
                         <option value="title_tagline"><?php _e( 'Site Title & Tagline', 'simple-customize-plugin' ); ?></option>
                         <option value="colors" selected="selected"><?php _e( 'Colors', 'simple-customize-plugin' ); ?></option>
