@@ -462,6 +462,10 @@ class simple_customize
                             </div>\
                         </label>\
                         <label>\
+                            <input type="checkbox" id="customize-strict-grab">\
+                            <?php _e( 'Grab only the last selector', 'simple-customize-plugin' ); ?>
+                        </label>\
+                        <label>\
                             <span class="customize-control-title"><?php _e( 'What to customize', 'simple-customize-plugin' ); ?></span>\
                             <div class="customize-control-content">\
                                 <select id="simple_customize_selector_auto" style="width:98%;"></select>\
@@ -516,8 +520,12 @@ class simple_customize
                                 return entry
                             });
 
-                            theseParents.reverse();
-                            theseParents = theseParents.join(" ");
+                            if ($("#customize-strict-grab").is(':checked')) {
+                                theseParents = theseParents[0];
+                            } else {
+                                theseParents.reverse();
+                                theseParents = theseParents.join(" ");
+                            }
 
                             simple_select = false;
 
