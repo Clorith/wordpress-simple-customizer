@@ -127,6 +127,24 @@
     <br />
 
     <?php
-        include_once( plugin_dir_path( __FILE__ ) . '/options/' . $current_tab . '.php' );
+        switch ( $_GET['tab'] )
+        {
+            case 'home':
+                $include = 'home.php';
+                break;
+            case 'fonts':
+                $include = 'fonts.php';
+                break;
+            case 'datasets':
+                $include = 'datasets.php';
+                break;
+            case 'help':
+                $include = 'help.php';
+                break;
+            default:
+                $include = 'home.php';
+        }
+
+        include_once( plugin_dir_path( __FILE__ ) . '/options/' . $include );
     ?>
 </div>
