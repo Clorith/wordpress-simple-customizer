@@ -1,4 +1,6 @@
+![Banner image](http://i.imgur.com/cSSSz1G.png)
 # Simple customize #
+
 **Contributors:** Clorith
   
 **Author URI:** http://www.mrstk.net
@@ -62,22 +64,22 @@ Styling your site is never an easy task, and to give you the best possible tools
 ###1. The Simple Customize alternative added to the WordPress customize page
 ###
 ![The Simple Customize alternative added to the WordPress customize page
-](http://s.wordpress.org/extend/plugins/simple-customize/screenshot-1.png)
+](http://i.imgur.com/I7j9ZeN.png)
 
 ###2. The fields have been automatically populated by using the Find element button
 ###
 ![The fields have been automatically populated by using the Find element button
-](http://s.wordpress.org/extend/plugins/simple-customize/screenshot-2.png)
+](http://i.imgur.com/DlBvGAG.png)
 
 ###3. Our new customize option under the colors category
 ###
 ![Our new customize option under the colors category
-](http://s.wordpress.org/extend/plugins/simple-customize/screenshot-3.png)
+](http://i.imgur.com/YJL9US3.png)
 
 ###4. We decided to change the color a little bit. Thanks to the color picker, this is made even easier!
 ###
 ![We decided to change the color a little bit. Thanks to the color picker, this is made even easier!
-](http://s.wordpress.org/extend/plugins/simple-customize/screenshot-4.png)
+](http://i.imgur.com/ezM8KP8.png)
 
 
 
