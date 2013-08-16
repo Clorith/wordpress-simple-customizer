@@ -1,9 +1,12 @@
 === Simple customize ===
 Contributors: Clorith
-Tags: theme, customization, css, design
+Author URI: http://www.mrstk.net
+Plugin URI: http://www.mrstk.net/wordpress-simple-customize/
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8W62C6EZXJPY
+Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
-Tested up to: 3.5.2
-Stable tag: 1.0
+Tested up to: 3.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,17 +14,22 @@ Easily customize your sites theme using the WordPress Customize API. This can be
 
 == Description ==
 
-The plugin will (in theory) allow any user to modify the look of any theme to their own desire.
+Personalise your own website, no matter what theme and what customization options are added by the themes creator.
 
-When active, the plugin will add a new section to your Customize screen entitled Simple Customize, containing input fields for various elements needed to display a new customize option to the user.
+When active, the plugin will add a new section to your Customize screen entitled Simple Customize, containing input fields for various elements needed to display a new customize option.
 
-The unique feature that makes this plugin so universally accessible is the "Find element" button. Once clicked it will trigger on any element you click in the preview window, auto-populating the fields to add customization* as best it can. Some basic knowledge of CSS is desirable, in order to ensure that the CSS selector is correct. Given that it iterates through the entire DOM to create the selector, you might want to modify it to something less specific or more specific.
+You can easily find what you wish to customize by using the *Find element* button, which will let you point and click in the preview window to find what you are looking for.
+Although no prior knowledge of CSS or HTML is required to use the plugin, basic understanding of CSS will definitely help you make the most out of this plugin, an in turn your own site.
 
-Once you are happy with everything in the options, "Add element" to have your customize option implemented. The CSS will be loaded before any other CSS, so assuming the theme doesn't have any !important flats on its styling, it will be prioritized.
+Once you are happy with everything in the options, use the *Add element* button to have your customize option implemented.
+The CSS will be queued up in such a manner that it will try to be the dominant rule, so assuming the theme doesn't have any [!important](http://stackoverflow.com/questions/3706819/what-are-the-implications-of-using-important-in-css) flags on its styling, your own styling will appear.
 
-Of course, should you wish to manually implement or remove a customize option, you can use the handy Simple Customize options page!
+You are also able to implement 3rd party fonts using the plugins own options page, where you may add manual styling alternatives, as well as create categories for grouping your own styles.
 
-Caution: this plugin is still experimental to say the least, so use at your own discretion. Stylings can be undone by deleting them, or by disabling the plugin altogether.
+All customizations are theme-specific, this means if you ever change your theme, you will get a clean slate to work off when customizing it.
+Of course, should you ever revert back to your old theme, your previous custom styling will still be there.
+
+**Note:** You should always be cautious of modifying other peoples work, respect the time and dedication put forth by your themes author.
 
 == Installation ==
 
@@ -35,13 +43,38 @@ Caution: this plugin is still experimental to say the least, so use at your own 
 
 No existing knowledge is required, although some basic knowledge of CSS is recommended.
 
+= Why can't I change styles from the Simple Customize options page? =
+
+Styling your site is never an easy task, and to give you the best possible tools for the job, the WordPress live preview page is required, for this reason it was decided to disable any style changing from the options page to make sure the styling looks like you intend when you make the changes.
+
 == Screenshots ==
 
+1. The Simple Customize alternative added to the WordPress customize page
+2. The fields have been automatically populated by using the Find element button
+3. Our new customize option under the colors category
+4. We decided to change the color a little bit. Thanks to the color picker, this is made even easier!
 
 
 == Changelog ==
 
+= 1.2.0 =
+* Added translation support for dropdown selectors when customizing
+* Added more pre-built dropdown choices
+* Generated CSS now has labels in it to show you what customize option created a style if you view the source
+* Added "advanced mode", disables pre-built options and lets you define everything your self
+* Made the help page translatable
 
+= 1.1.1 =
+* Compatibility fix for WordPress 3.6
+
+= 1.1.0 =
+* Fixed custom categories not showing on options page
+* Added support for font-family attributes
+* Added settings page
+* Decide if customizations go in their own CSS file, or i nthe <head> of your site to reduce server requests
+* Added ability to enable/disable individual fonts
+* Import and export added for whole theme sets
 
 == Upgrade notice ==
 
+Improved translation support and pre-built customize choice enhancements.
