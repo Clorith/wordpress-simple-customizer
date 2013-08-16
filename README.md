@@ -15,7 +15,7 @@
   
 **Tested up to:** 3.6
   
-**Stable tag:** 1.1.1
+**Stable tag:** 1.2.0
   
 **License:** GPLv2 or later
   
@@ -85,6 +85,13 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 ## Changelog ##
 
+### 1.2.0 ###
+* Added translation support for dropdown selectors when customizing
+* Added more pre-built dropdown choices
+* Generated CSS now has labels in it to show you what customize option created a style if you view the source
+* Added "advanced mode", disables pre-built options and lets you define everything your self
+* Made the help page translatable
+
 ### 1.1.1 ###
 * Compatibility fix for WordPress 3.6
 
@@ -98,4 +105,4 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 ## Upgrade notice ##
 
-Custom categories fix and multiple enhancements.
+Improved translation support and pre-built customize choice enhancements.
