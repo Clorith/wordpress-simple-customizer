@@ -1,6 +1,35 @@
 <?php
     $theme = wp_get_theme();
 
+    //  Importer
+    if ( isset( $_POST['simple-customize-import'] ) && ! empty( $_POST['simple-customize-import'] ) )
+    {
+        $import = unserialize( base64_decode( $_POST['simple-customize-import'] ) );
+
+        if ( ! empty( $import ) )
+        {
+            $theme = $import['theme'];
+
+            foreach ( $import['options'] AS $oid => $option )
+            {
+                set_theme_mod( sanitize_title( $option['label'] ), $option['value'] );
+                unset( $import['options'][$oid]['value'] );
+            }
+
+            $options = get_option( 'simple_customize', array( $theme => array() ) );
+            $options[$theme]= $import['options'];
+            update_option( 'simple_customize', $options );
+
+            $categories = get_option( 'simple_customize_category', array( $theme => array() ) );
+            $categories[$theme] = $import['categories'];
+            update_option( 'simple_customize_category', $categories );
+
+            $fonts = get_option( 'simple_customize_fonts', array( $theme => array() ) );
+            $fonts[$theme] = $import['fonts'];
+            update_option( 'simple_customize_fonts', $fonts );
+        }
+    }
+
     // Code relating to customize settings
     if ( isset( $_GET['delete'] ) && ! empty( $_GET['delete'] ) )
     {
@@ -71,33 +100,75 @@
     }
     if ( isset( $_GET['font-delete'] ) && ! empty( $_GET['font-delete'] ) )
     {
-        $options = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
-        $options_update = array(
+        $fonts = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+        $fonts_update = array(
             $theme->stylesheet => array()
         );
 
-        foreach( $options[$theme->stylesheet] AS $option )
+        foreach( $fonts[$theme->stylesheet] AS $font )
         {
-            if ( sanitize_title( $option['font-label'] ) != $_GET['font-delete'] )
-                $options_update[$theme->stylesheet][] = $option;
+            if ( sanitize_title( $font['font-label'] ) != $_GET['font-delete'] )
+                $fonts_update[$theme->stylesheet][] = $font;
         }
 
-        update_option( 'simple_customize_fonts', $options_update );
+        update_option( 'simple_customize_fonts', $fonts_update );
+    }
+    if ( isset( $_GET['font-disable'] ) && ! empty( $_GET['font-disable'] ) )
+    {
+        $fonts = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+
+        foreach( $fonts[$theme->stylesheet] AS $fid => $font )
+        {
+            if ( sanitize_title( $font['font-label'] ) == $_GET['font-disable'] )
+                $fonts[$theme->stylesheet][$fid]['font-status'] = 'disabled';
+        }
+
+        update_option( 'simple_customize_fonts', $fonts );
+    }
+    if ( isset( $_GET['font-enable'] ) && ! empty( $_GET['font-enable'] ) )
+    {
+        $fonts = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+
+        foreach( $fonts[$theme->stylesheet] AS $fid => $font )
+        {
+            if ( sanitize_title( $font['font-label'] ) == $_GET['font-enable'] )
+                $fonts[$theme->stylesheet][$fid]['font-status'] = 'enabled';
+        }
+
+        update_option( 'simple_customize_fonts', $fonts );
     }
 
     //  Dataset options
     if ( isset( $_GET['clear'] ) && ! empty( $_GET['clear'] ) )
     {
-        $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
+        $options    = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
+        $categories = get_option( 'simple_customize_category', array( $theme->stylesheet => array() ) );
+        $fonts      = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+
         unset( $options[$_GET['clear']] );
+        unset( $categories[$_GET['clear']] );
+        unset( $fonts[$_GET['clear']] );
 
         update_option( 'simple_customize', $options );
+        update_option( 'simple_customize_category', $categories );
+        update_option( 'simple_customize_fonts', $fonts );
+    }
+
+    //  Settings options
+    if ( isset( $_POST['simple-customize-settings'] ) )
+    {
+        $settings = get_option( 'simple_customize_settings', array() );
+        $settings['includefile'] = ( isset( $_POST['simple-customize-settings-includefile'] ) ? false : true );
+        $settings['advanced'] = ( isset( $_POST['simple-customize-settings-advanced'] ) ? true : false);
+
+        update_option( 'simple_customize_settings', $settings );
     }
 
     //  Our settings, which will be reused across the options pages
     $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
     $categories = get_option( 'simple_customize_category', array( $theme->stylesheet => array() ) );
     $fonts = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+    $settings = get_option( 'simple_customize_settings', array() );
 ?>
 <div class="wrap">
     <h2 class="nav-tab-wrapper">
@@ -106,6 +177,7 @@
                 'home'       => __( 'Simple Customize', 'simple-customize-plugin' ),
                 'fonts'      => __( 'Fonts', 'simple-customize-plugin' ),
                 'datasets'   => __( 'Datasets', 'simple-customize-plugin' ),
+                'settings'   => __( 'Settings', 'simple-customize-plugin' ),
                 'help'       => __( 'Help', 'simple-customize-plugin' )
             );
 
@@ -127,7 +199,7 @@
     <br />
 
     <?php
-        switch ( $_GET['tab'] )
+        switch ( ( isset( $_GET['tab'] ) ? $_GET['tab'] : '' ) )
         {
             case 'home':
                 $include = 'home.php';
@@ -140,6 +212,9 @@
                 break;
             case 'help':
                 $include = 'help.php';
+                break;
+            case 'settings':
+                $include = 'settings.php';
                 break;
             default:
                 $include = 'home.php';
