@@ -7,6 +7,7 @@
             <th scope="col"><?php _e( 'Selector', 'simple-customize-plugin' ); ?></th>
             <th scope="col"><?php _e( 'Attribute', 'simple-customize-plugin' ); ?></th>
             <th scope="col"><?php _e( 'Default value', 'simple-customize-plugin' ); ?></th>
+            <th scope="col"><?php _e( 'Current value', 'simple-customize-plugin' ); ?></th>
         </tr>
         </thead>
 
@@ -17,6 +18,7 @@
             <th scope="col"><?php _e( 'Selector', 'simple-customize-plugin' ); ?></th>
             <th scope="col"><?php _e( 'Attribute', 'simple-customize-plugin' ); ?></th>
             <th scope="col"><?php _e( 'Default value', 'simple-customize-plugin' ); ?></th>
+            <th scope="col"><?php _e( 'Current value', 'simple-customize-plugin' ); ?></th>
         </tr>
         </tfoot>
 
@@ -49,6 +51,9 @@
                     <td>
                         <?php echo $option['default']; ?>
                     </td>
+                    <td>
+                        <?php echo get_theme_mod( sanitize_title( $option['label'] ), $option['default'] ); ?>
+                    </td>
                 </tr>
             <?php
             }
@@ -56,7 +61,7 @@
         ?>
 
         <tr>
-            <td colspan="5">
+            <td colspan="6">
                 <strong><?php _e( 'Add a new selector', 'simple-customize-plugin' ); ?></strong>
             </td>
         </tr>
@@ -75,11 +80,11 @@
                     <optgroup label="<?php _e( 'Your categories', 'simple-customize-plugin' ); ?>">
                         <?php
 
-                        if ( isset( $categories[$theme->stylesheer] ) )
+                        if ( isset( $categories[$theme->stylesheet] ) )
                         {
                             foreach( $categories[$theme->stylesheet] AS $category )
                             {
-                                echo '<option value="' . sanitize_title( $category['category-label'] ) . '">' . $category['category-label'] . '</option>';
+                                echo '<option value="' . sanitize_title( $category['category-label'] ) . '">' . $category['category-label'] . '</option>\\';
                             }
                         }
                         ?>
@@ -89,9 +94,7 @@
             <td><input type="text" style="width:100%;" name="object"></td>
             <td><input type="text" style="width:100%;" name="selector_manual"></td>
             <td><input type="text" style="width:100%;" name="default"></td>
-        </tr>
-        <tr>
-            <td colspan="5" style="text-align:right;">
+            <td>
                 <button type="submit" class="button-primary"><?php _e( 'Add this selector', 'simple-customize-plugin' ); ?></button>
             </td>
         </tr>
