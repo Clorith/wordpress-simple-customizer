@@ -106,3 +106,7 @@ Styling your site is never an easy task, and to give you the best possible tools
 ## Upgrade notice ##
 
 Improved translation support and pre-built customize choice enhancements.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Clorith/wordpress-simple-customizer/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
