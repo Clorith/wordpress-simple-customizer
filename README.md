@@ -1,6 +1,10 @@
 ![Banner image](http://i.imgur.com/cSSSz1G.png)
 # Simple customize #
 
+# Maintainer note #
+
+**The GitHub version of this plugin is not actively maintained, for updates see the WordPress.org version at https://wordpress.org/plugins/simple-customizer/**
+
 **Contributors:** Clorith
   
 **Author URI:** http://www.mrstk.net
