@@ -1,0 +1,97 @@
+.options-toolbar {
+	margin-bottom: 20px;
+	text-align: right;
+}
+.options-toolbar .modal-trigger {
+	margin-left: 10px;
+}
+.options-toolbar .modal-trigger:first-child {
+	margin-left: 0;
+}
+
+.modal-title {
+	padding: 0 45px 0 20px;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 56px;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 56px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.modal-body {
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.modal-toolbar {
+	padding: 15px 16px;
+	border-top: 1px solid #ddd;
+	float: left;
+	width: 100%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	box-sizing: border-box;
+	text-align: right;
+}
+
+.modal-body .control-group {
+	box-sizing: border-box;
+	padding: 7px 0;
+	float: left;
+	width: 100%;
+}
+.modal-body label {
+	width: 25%;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 27px;
+	vertical-align: top;
+}
+.modal-body .controls {
+	width: 70%;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.simple-customize-font-select-box {
+	height: 300px;
+	overflow-y: scroll;
+}
+.simple-customize-font {
+	width: 100%;
+	display: block;
+	cursor: pointer;
+	font-size: 14px;
+	padding: 7px;
+	box-sizing: border-box;
+}
+.simple-customize-font.active {
+	background-color: #f5f5f5;
+}
+#simple-customize-font-preview {
+	font-size: 24px;
+	line-height: 30px;
+}
+
+#TB_title {
+	float: left;
+	height: 1px;
+}
+#TB_ajaxWindowTitle {
+	display: none;
+}
+#TB_ajaxContent {
+	padding: 0;
+}
+.tb-close-icon {
+	line-height: 48px;
+	width: 48px;
+	height: 48px;
+}

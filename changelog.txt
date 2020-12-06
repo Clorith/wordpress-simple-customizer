@@ -1,0 +1,107 @@
+= 1.6.6 =
+* Compatibility update for WordPress 4.7
+
+= 1.6.5 =
+* Compatibility update for WordPress 4.5
+* Moved extended changelog entries to `changelog.txt`
+
+= 1.6.4 =
+* Fixed Google Fonts not always being included like they should, resulting in default fonts being displayed
+
+= 1.6.3 =
+* Fixed live previewing of changes made
+
+= 1.6.2 =
+* Updated the style clearing option to also clear the newly added format for customization storage
+* Streamlined the uninstall procedure when removing the plugin
+* Added some missing checks to prevent direct loading of files
+* Fixed problem with exporting as CSS when picking a theme that isn't currently active
+
+= 1.6.1 =
+* Fix for imports using the new format some times failing due to auto-generated slashes
+
+= 1.6 =
+* Made the customizer attribute cases extendible
+* Added hooks to various areas to make the plugin more flexible
+* Fixed custom categories not showing up in the customizer screen
+* Fixed editing mixing up attributes and selectors
+
+= 1.5 =
+* Improved how the customizer section is generated
+* Improved handling of Google Fonts
+* Changed customization storage from options table to a Custom Post Type
+* Changed exports to use a JSON string
+* Added default value option for font drop-downs (default theme value rarely matched any web font options)
+* Added minify option for the generated CSS file
+* Added CSS export option
+* Added CSS caching to prevent excessive SQL queries with largely customized sites
+* Fixed error appearing before the initial loading of fonts
+* Replaced generic icons used with dashicons
+* Replaced inline styles with proper CSS for plugin related features
+* Opened up developer mode to have more options in the customizer screen
+
+= 1.4 =
+* Added edit modal for the customizer settings page
+* Changed the way new customizations are added for servers with limits on URL elements
+* Forced URLs into all forms as some browsers dislike self referencing forms
+* Fixed in-header output not always being generated when opting to not use a stand alone CSS file
+* General code cleanup to bring up the standards a bit more
+
+= 1.3.2 =
+* Fixed a warning when loading the fonts settings where some fonts didn't have proper URLs
+* Fixed point and click customization tool
+* Added nonce checks to customizer selections
+* General code cleanup, separated it out from single file to make it easier to work with
+
+= 1.3.1 =
+* Add checks to prevent direct access to files
+* Add checks for XSS attacks
+
+= 1.3.0 =
+* Tested with WordPress 3.9
+* Cleaned up the customizer screen
+* Cleaned up the options page
+* Cleaned up the fonts page
+* Cleaned up the settings page
+* Font previews before adding them to your site
+* Font enable/disable is deprecated with the new font previewer
+* Removed help tab, it was bloated and didn't provide proper help
+* 'Advanced mode' has been re-labeled as 'Developer mode'
+
+= 1.2.5 =
+* Fixed notice outputs for undefined variables when not in compatibility mode
+
+= 1.2.4 =
+* Optimized some bad code
+* Added extra checks for compatibility mode not always triggering
+
+= 1.2.3 =
+* Compatibility mode for situations with strange rewrite rules (specially handy for nginx users)
+* Made the Settings page a bit more readable
+* Default to last CSS selector in the customizer screen
+
+= 1.2.2 =
+* Added loading of translated texts
+* Added spanish translations
+
+= 1.2.1 =
+* Version bump, tested against WP 3.7, 3.7.1 and 3.8
+* Reworked the priority list to increase probability styles being prioritized when including as a .css file
+
+= 1.2.0 =
+* Added translation support for drop down selectors when customizing
+* Added more pre-built drop down choices
+* Generated CSS now has labels in it to show you what customize option created a style if you view the source
+* Added "advanced mode", disables pre-built options and lets you define everything your self
+* Made the help page translatable
+
+= 1.1.1 =
+* Compatibility fix for WordPress 3.6
+
+= 1.1.0 =
+* Fixed custom categories not showing on options page
+* Added support for font-family attributes
+* Added settings page
+* Decide if customizations go in their own CSS file, or i nthe <head> of your site to reduce server requests
+* Added ability to enable/disable individual fonts
+* Import and export added for whole theme sets

@@ -1,16 +1,16 @@
 === Simple customize ===
 Contributors: Clorith
-Author URI: http://www.mrstk.net
-Plugin URI: http://www.mrstk.net/wordpress-simple-customize/
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8W62C6EZXJPY
+Author URI: http://www.clorith.net
+Plugin URI: http://www.clorith.net/wordpress-simple-customize/
+Donate link: https://www.paypal.me/clorith
 Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
-Tested up to: 3.6
-Stable tag: 1.2.0
+Tested up to: 4.9
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Easily customize your sites theme using the WordPress Customize API. This can be done by point and clicking on what you wish to make adjustments to.
+It's your site, now customize it!
 
 == Description ==
 
@@ -50,31 +50,14 @@ Styling your site is never an easy task, and to give you the best possible tools
 == Screenshots ==
 
 1. The Simple Customize alternative added to the WordPress customize page
-2. The fields have been automatically populated by using the Find element button
-3. Our new customize option under the colors category
-4. We decided to change the color a little bit. Thanks to the color picker, this is made even easier!
+2. The view after clicking the find button
+3. The fields have gotten a list of available options for you to choose from
+4. Our new customize option under the colors category
+5. We decided to change the color a little bit. Thanks to the color picker, this is made even easier!
 
 
 == Changelog ==
 
-= 1.2.0 =
-* Added translation support for dropdown selectors when customizing
-* Added more pre-built dropdown choices
-* Generated CSS now has labels in it to show you what customize option created a style if you view the source
-* Added "advanced mode", disables pre-built options and lets you define everything your self
-* Made the help page translatable
-
-= 1.1.1 =
-* Compatibility fix for WordPress 3.6
-
-= 1.1.0 =
-* Fixed custom categories not showing on options page
-* Added support for font-family attributes
-* Added settings page
-* Decide if customizations go in their own CSS file, or i nthe <head> of your site to reduce server requests
-* Added ability to enable/disable individual fonts
-* Import and export added for whole theme sets
-
-== Upgrade notice ==
-
-Improved translation support and pre-built customize choice enhancements.
+= 1.7.0 =
+* Fixed error preventing loading of the customizer screen in some cases.
+* Updated to use the Customizer Previewer API, more reliable and future proof!

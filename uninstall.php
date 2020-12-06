@@ -1,29 +1,44 @@
 <?php
-    /**
-     * Script ran on plugin uninstall
-     *
-     * Will remove the following data
-     *  - Capabilities
-     *  - Customizations
-     */
-    if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) )
-        exit();
+	if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+		die();
+	}
 
-    /**
-     * Remove capability from all roles
-     */
-    global $wp_roles;
-    $roles = $wp_roles->get_names();
+	//  Remove options added via the Options API
+	delete_option( 'simple_customize' );
+	delete_option( 'simple_customize_settings' );
+	delete_option( 'simple_customize_google_fonts' );
+	delete_option( 'simple-customize-version' );
 
-    foreach( $roles AS $role_name => $role_label )
-    {
-        $wp_roles->remove_cap( $role_name, 'customizer_can_use_advanced' );
-    }
+	//  Clear out any taxonomy terms that were added
+	$terms = get_terms(
+		'simple-customize',
+		array(
+			'hide_empty' => false
+		)
+	);
+	foreach( $terms AS $term )
+	{
+		wp_delete_term( $term->term_id, 'simple-customize' );
+	}
 
+	//  Remove customize post entries and associated meta values
+	$entries = get_posts( array(
+		'posts_per_page' => -1,
+		'post_type'      => 'simple-customize'
+	) );
+	foreach( $entries AS $entry )
+	{
+		wp_delete_post( $entry->ID );
+	}
 
-    /**
-     * Remove customizations from the database
-     */
-    delete_option( 'simple_customize' );
-    delete_option( 'simple_customize_version' );
-    delete_option( 'simple_customize_active_theme' );
+	//  Remove font options also stored with the plugin
+	$fonts = get_posts( array(
+		'posts_per_page' => -1,
+		'post_type'      => 's-c-font',
+		'post_status'    => array( 'draft', 'publish' )
+	) );
+
+	foreach( $fonts AS $font )
+	{
+		wp_delete_post( $font->ID );
+	}

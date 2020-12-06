@@ -1,106 +1,87 @@
+<?php
+/**
+ * Prevent direct access to files
+ */
+if ( ! defined( 'WP_ADMIN' ) ) {
+	die();
+}
 
+global $simple_customize;
+global $wpdb;
+
+do_action( 'simple-customize-options-before-datasets' );
+?>
 <?php _e( "The list below contains all the themes you've styled, you can here remove your custom stylings entirely without editing the specific theme.", 'simple-customize-plugin' ); ?>
 
 <br />
 
-<form action="" method="post">
-    <table class="wp-list-table widefat" cellspacing="0">
-        <thead>
-        <tr>
-            <th scope="col"><?php _e( 'Theme Name', 'simple-customize-plugin' ); ?></th>
-            <th scope="col"><?php _e( 'Theme Author', 'simple-customize-plugin' ); ?></th>
-            <th scope="col"><?php _e( 'Actions', 'simple-customize-plugin' ); ?></th>
-        </tr>
-        </thead>
+<table class="wp-list-table widefat" cellspacing="0">
+	<thead>
+	<tr>
+		<th scope="col"><?php _e( 'Theme Name', 'simple-customize-plugin' ); ?></th>
+		<th scope="col"><?php _e( 'Theme Author', 'simple-customize-plugin' ); ?></th>
+		<th scope="col"><?php _e( 'Actions', 'simple-customize-plugin' ); ?></th>
+	</tr>
+	</thead>
 
-        <tfoot>
-        <tr>
-            <th scope="col"><?php _e( 'Theme Name', 'simple-customize-plugin' ); ?></th>
-            <th scope="col"><?php _e( 'Theme Author', 'simple-customize-plugin' ); ?></th>
-            <th scope="col"><?php _e( 'Actions', 'simple-customize-plugin' ); ?></th>
-        </tr>
-        </tfoot>
+	<tfoot>
+	<tr>
+		<th scope="col"><?php _e( 'Theme Name', 'simple-customize-plugin' ); ?></th>
+		<th scope="col"><?php _e( 'Theme Author', 'simple-customize-plugin' ); ?></th>
+		<th scope="col"><?php _e( 'Actions', 'simple-customize-plugin' ); ?></th>
+	</tr>
+	</tfoot>
 
-        <tbody id="the-list">
-        <?php
-            $options = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
+	<tbody id="the-list">
+	<?php
+		$entries = $wpdb->get_results( "
+			SELECT
+				meta_value
+			FROM
+				" . $wpdb->postmeta . "
+			WHERE
+				meta_key = '_simple_customize_theme'
+			GROUP BY
+				meta_value
+		" );
 
-            foreach( $options AS $themename => $themeoptions )
-            {
-                $theme = wp_get_theme ( $themename );
-                echo '
-                    <tr>
-                        <td>' . $theme->Name . '</td>
-                        <td>' . $theme->Author . '</td>
-                        <td>
-                            <a href="?page=simple-customize&tab=datasets&clear=' . $themename . '">' . __( 'Delete stylings', 'simple-customize-plugin' ) . '</a>
-                             |
-                            <a href="?page=simple-customize&tab=datasets&export=' . $themename . '">' . __( 'Export customizations', 'simple-customize-plugin' ) . '</a>
-                        </td>
-                    </tr>
-                ';
-            }
-        ?>
-        </tbody>
-    </table>
-</form>
+		foreach( $entries AS $entry )
+		{
+			$theme = wp_get_theme ( $entry->meta_value );
+			$dataset_line = '';
 
-<?php
-    if ( isset( $_GET['export'] ) )
-    {
-        $export = array(
-            'theme'      => $_GET['export'],
-            'categories' => array(),
-            'options'    => array(),
-            'fonts'      => array()
-        );
 
-        if ( isset( $categories[$_GET['export']] ) )
-        {
-            foreach( $categories[$_GET['export']] AS $category )
-            {
-                $export['categories'][] = $category;
-            }
-        }
+			$dataset_line .= '
+				<tr>
+					<td>' . apply_filters( 'simple-customzier-datasets-list-item-name', $theme->Name ) . '</td>
+					<td>' . apply_filters( 'simple-customizer-datasets-list-item-author', $theme->Author ) . '</td>
+					<td>
+			';
 
-        if ( isset( $options[$_GET['export']] ) )
-        {
-            $theme_mods = get_theme_mods();
+			$dataset_actions = '
+						<a href="' . wp_nonce_url( 'themes.php?page=simple-customize&tab=datasets&clear=' . $entry->meta_value, 'simple-customize-clear-' . $entry->meta_value ) . '">' . __( 'Delete stylings', 'simple-customize-plugin' ) . '</a>
+						 |
+						<a href="' . admin_url( 'themes.php?page=simple-customize&tab=datasets&export=' . $entry->meta_value ) . '">' . __( 'Export customizations', 'simple-customize-plugin' ) . '</a>
+						 |
+						<a href="' . admin_url( 'themes.php?page=simple-customize&tab=datasets&export=' . $entry->meta_value . '&css=true' ) . '">' . __( 'Export CSS', 'simple-customize-plugin' ) . '</a>
+			';
 
-            foreach( $options[$_GET['export']] AS $option )
-            {
-                $mod = sanitize_title( $option['label'] );
-                $option['value'] = $theme_mods[$mod];
+			$dataset_line .= apply_filters( 'simple-customizer-datasets-list-item-actions', $dataset_actions, $entry );
 
-                $export['options'][] = $option;
-            }
-        }
+			$dataset_line .= '
+					</td>
+				</tr>
+			';
 
-        if ( isset( $fonts[$_GET['export']] ) )
-        {
-            foreach( $fonts[$_GET['export']] AS $fnum => $font )
-            {
-                $export['fonts'][] = $font;
-            }
-        }
-?>
-
-    <h3><?php _e( 'Export customization', 'simple-customize-plugin' ); ?></h3>
-    <textarea name="simple-customize-export" style="width: 100%; height: 75px;"><?php echo base64_encode( serialize( $export ) ); ?></textarea>
+			echo apply_filters( 'simple-customizer-datasets-list-item', $dataset_line );
+		}
+	?>
+	</tbody>
+</table>
 
 <?php
-        _e( 'Copy the text above, it represents your themes customizations, categories and fonts', 'simple-customize-plugin' );
-    }
-    else {
-?>
+	include_once( plugin_dir_path( __FILE__ ) . '/datasets-export.php' );
+    include_once( plugin_dir_path( __FILE__ ) . '/datasets-import.php' );
 
-<form action="" method="post">
-    <h3><?php _e( 'Import customizations', 'simple-customize-plugin' ); ?></h3>
-
-    <textarea name="simple-customize-import" style="width: 100%; height: 75px;" placeholder="Put your customization string here"></textarea>
-    <?php submit_button( __( 'Add customization', 'simple-customize-plugin' ) ); ?>
-</form>
-
-<?php
-    }
+	do_action( 'simple-customize-options-after-datasets' );
 ?>
