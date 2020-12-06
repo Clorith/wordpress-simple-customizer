@@ -80,20 +80,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 <span class="customize-control-title <?php echo implode( " ", $customize_classes ); ?>">&nbsp;</span>
 <div class="simple-customize customize-control-content <?php echo implode( " ", $customize_classes ); ?>">
 	<div class="simple-select-info updated">
-		<strong>
-			<?php _e( 'Select your element', 'simple-customize-plugin' ); ?>
-		</strong>
+        <p>
+            <strong>
+                <?php _e( 'Select your element', 'simple-customize-plugin' ); ?>
+            </strong>
 
-		<br />
+            <br />
 
-		<?php _e( 'You have started the customize process, please click the element you wish to customize in the preview window.', 'simple-customize-plugin' ); ?>
+            <?php _e( 'You have started the customize process, please click the element you wish to customize in the preview window.', 'simple-customize-plugin' ); ?>
 
-		<br />
-		<br />
+            <br />
+            <br />
 
-		<span id="simple_customize_cancel">
-			<?php _e( 'Cancel search', 'simple-customize-plugin' ); ?>
-		</span>
+            <button type="button" id="simple_customize_cancel">
+                <?php _e( 'Cancel search', 'simple-customize-plugin' ); ?>
+            </button>
+        </p>
 	</div>
 	<div class="simple-select-button">
 		<button type="button" class="button" id="simple_customize_selector">

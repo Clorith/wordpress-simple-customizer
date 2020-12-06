@@ -15,6 +15,14 @@
 	$google_fonts = get_option( 'simple_customize_google_fonts', array() );
 ?>
 <div class="wrap">
+    <h1 class="wp-heading-inline">
+        <?php esc_html_e( 'Simple Customize', 'simple-customizer' ); ?>
+
+        <a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" class="page-title-action"><?php esc_html_e( 'Customize your theme', 'simple-customize-plugin' ); ?></a>
+
+        <a href="<?php echo wp_nonce_url( 'themes.php?page=simple-customize&tab=home&reload-customize-css=true', 'simple-customize-reload-css' ); ?>" class="page-title-action"><?php esc_html_e( 'Reload CSS cache', 'simple-customize-plugin' ); ?></a>
+    </h1>
+
     <h2 class="nav-tab-wrapper">
         <?php
             $tabs = array(
@@ -29,16 +37,12 @@
             foreach( $tabs AS $tab => $name )
             {
                 echo '
-                    <a class="nav-tab' . ( $current_tab == $tab ? ' nav-tab-active' : '' ) . '" href="?page=simple-customize&amp;tab=' . $tab . '">
-                        ' . $name . '
+                    <a class="nav-tab' . ( $current_tab == $tab ? ' nav-tab-active' : '' ) . '" href="?page=simple-customize&amp;tab=' . esc_attr( $tab ) . '">
+                        ' . esc_html( $name ) . '
                     </a>
                 ';
             }
         ?>
-
-        <a href="<?php echo admin_url( 'customize.php' ); ?>" class="add-new-h2"><?php _e( 'Customize your theme', 'simple-customize-plugin' ); ?></a>
-
-        <a href="<?php echo wp_nonce_url( 'themes.php?page=simple-customize&tab=home&reload-customize-css=true', 'simple-customize-reload-css' ); ?>" class="add-new-h2"><?php _e( 'Reload CSS cache', 'simple-customize-plugin' ); ?></a>
     </h2>
 
     <br />

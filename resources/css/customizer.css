@@ -2,7 +2,7 @@
 .wp-core-ui .simple-customize input:not([type="checkbox"]):not([type="radio"]),
 .wp-core-ui .simple-customize textarea,
 .wp-core-ui .simple-customize select {
-	width: 98%;
+	width: 100%;
 }
 .wp-core-ui .simple-customize-advanced,
 .wp-core-ui .simple-select-info,
@@ -17,7 +17,7 @@
 	display: none;
 }
 .wp-core-ui .simple-customize .dashicons {
-	line-height: inherit;
+	line-height: 1.4;
 }
 .wp-core-ui .simple-customize-settings-button {
 	float: right;
@@ -26,4 +26,9 @@
 .wp-core-ui .simple-customize #simple_customize_cancel {
 	color: #bc0b0b;
 	cursor: pointer;
+	border: none;
+	background: none;
+	display: inline-block;
+	width: initial;
+	padding: 0;
 }
