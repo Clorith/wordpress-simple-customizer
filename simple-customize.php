@@ -51,8 +51,7 @@ class simple_customize
 	public $attribute  = array();
 
 	private $google    = array(
-		'apikey'   => 'AIzaSyATN_Or4kCIaz0WspR7qq875n_FXSXyeq4',
-		'font_url' => '//fonts.googleapis.com/css?family='
+		'font_url' => '//fonts.googleapis.com/css?family=',
 	);
 
     /**
@@ -65,7 +64,7 @@ class simple_customize
         $this->theme           = wp_get_theme();
         $this->config          = get_option( 'simple_customize_settings', array() );
 		$this->google['fonts'] = get_option( 'simple_customize_google_fonts', '' );
-	    $this->debug           = WP_DEBUG;
+	    $this->debug           = ( defined( 'WP_DEBUG' ) ? WP_DEBUG : false );
 
         add_action( 'customize_register', array( $this, 'build' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'style' ), ( defined( 'PHP_INT_MAX' ) ? PHP_INT_MAX : 9999 ) );
@@ -321,8 +320,15 @@ class simple_customize
 	 * @return void
 	 */
 	function ajax_handler() {
+		$google_key = self::get_plugin_settings( 'google_api' );
+
+		// A google API key is needed for this functionality, so bail early if one does not exist.
+		if ( ! $google_key ) {
+			return;
+		}
+
 		if ( isset( $_POST['todo'] ) && 'refresh-fonts' == $_POST['todo'] && check_ajax_referer( 'simple-customize-get-fonts' ) ) {
-			$gfonts_http = wp_remote_retrieve_body( wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . $this->google['apikey'] ) );
+			$gfonts_http = wp_remote_retrieve_body( wp_remote_get( 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . $google_key ) );
 
 			$gfonts = json_decode( $gfonts_http );
 
@@ -595,6 +601,7 @@ class simple_customize
 			$settings['advanced']      = ( isset( $_POST['simple-customize-settings-advanced'] ) ? true : false);
 			$settings['compatibility'] = ( isset( $_POST['simple-customize-settings-compatibility'] ) ? true : false );
 			$settings['minified']      = ( isset( $_POST['simple-customize-settings-minified'] ) ? true : false );
+			$settings['google_api']    = $_POST['simple-customize-settings-google-api-key'];
 
 			update_option( 'simple_customize_settings', $settings );
 		}
@@ -948,6 +955,27 @@ class simple_customize
             echo '</style>';
 	        echo "\n";
         }
+    }
+
+	/**
+	 * Fetch a specific, or all, settings for the plugin.
+	 *
+	 * @param string $setting The setting to fetch
+	 *
+	 * @return mixed|null
+	 */
+    public static function get_plugin_settings( $setting = null ) {
+    	$settings = get_option( 'simple_customize_settings', array() );
+
+    	if ( null === $setting ) {
+		    return $settings;
+	    }
+
+        if ( isset( $settings[ $setting ] ) ) {
+            return $settings[ $setting ];
+	    }
+
+        return null;
     }
 
     /**

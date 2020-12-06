@@ -64,6 +64,16 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 			</td>
 		</tr>
 
+        <tr valign="top">
+            <td>
+                <label for="google-api-key">
+                    <?php esc_html_e( 'Google API key', 'simple-customizer' ); ?>
+                </label>
+                <br><br>
+                <input type="text" name="simple-customize-settings-google-api-key" id="google-api-key" value="<?php echo esc_attr( ( isset( $settings['google_api'] ) ? $settings['google_api'] : '' ) ); ?>">
+            </td>
+        </tr>
+
 	    <?php do_action( 'simple-customize-options-before-settings-submit' ); ?>
 
         <tr valign="top">

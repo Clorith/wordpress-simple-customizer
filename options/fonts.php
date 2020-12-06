@@ -6,6 +6,28 @@ if ( ! defined( 'WP_ADMIN' ) ) {
 	die();
 }
 
+$font_api_key = simple_customize::get_plugin_settings( 'google_api' );
+
+if ( ! $font_api_key ) :
+?>
+
+<div class="notice inline notice-warning">
+    <h2><?php esc_html_e( 'Google Fonts API key', 'simple-customizer' ); ?></h2>
+    <p>
+        <?php esc_html_e( 'The fonts integration requests a Google Fonts API key to work properly.', 'simple-customizer' ); ?>
+    </p>
+    <p>
+        <a href="https://console.developers.google.com/apis/credentials" rel="noreferrer noopener">
+            <?php esc_html_e( 'Get a Google API key here', 'simple-customizer' ); ?>
+        </a>
+    </p>
+</div>
+
+<?
+return;
+endif;
+
+
 do_action( 'simple-customize-options-before-fonts' );
 ?>
 <div class="options-toolbar">
@@ -110,4 +132,4 @@ do_action( 'simple-customize-options-before-fonts' );
 </table>
 
 <?php
-	do_action( 'simple-customize-options-after-fonts' );
+do_action( 'simple-customize-options-after-fonts' );
