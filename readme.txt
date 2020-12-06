@@ -6,7 +6,7 @@ Donate link: https://www.paypal.me/clorith
 Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
 Tested up to: 5.6
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,11 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 
 == Changelog ==
+
+= 1.7.1 =
+* Adjusted some styling for icons not properly aligned any more
+* Made Google Fonts require a custom API key with notices on how to get one.
+* New tested-with, 3 years later, still seems to work 🎉
 
 = 1.7.0 =
 * Fixed error preventing loading of the customizer screen in some cases.

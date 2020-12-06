@@ -3,7 +3,7 @@
  * Plugin Name: Simple Customizer
  * Plugin URI: http://www.clorith.net/wordpress-simple-customize/
  * Description: Customize the look of your themes without modifying any code, just point and click on the element you wish to change.
- * Version: 1.7.0
+ * Version: 1.7.1
  * Author: Clorith
  * Text Domain: simple-customizer
  * Author URI: http://www.clorith.net
@@ -35,7 +35,7 @@ class simple_customize
      * @var array $sections Used for storing our added sections before displaying them
      * @var array $settings The settings we wish to implement
      */
-	private $version   = "1.7.0";
+	private $version   = "1.7.1";
 	private $debug     = false;
     private $sections  = array();
     public $settings   = array();
